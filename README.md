@@ -13,7 +13,7 @@ Credit mostly goes to the sources below. I just compiled and sorted out what is 
 late 2013 Macbook Air 6,2
 
 
-# PARTITIONS
+# Partitions
 
 ```
 $cgdisk /dev/sda
@@ -39,7 +39,7 @@ $mount /dev/sda6 /mnt
 $mkdir /mnt/boot && mount /dev/sda5 /mnt/boot
 ```
 
-# SWAPFILE
+# Swapfile
 
 ```
 $dd if=/dev/zero of=/mnt/swapfile bs=1M count=512
@@ -54,7 +54,7 @@ $chmod 600 /mnt/swapfile
 $mkswap /mnt/swapfile
 ```
 
-# INSTALL
+# Install
 ```
 $pacstrap /mnt base base-devel
 ```
@@ -63,7 +63,7 @@ $pacstrap /mnt base base-devel
 $genfstab -U -p /mnt >> /mnt/etc/fstab
 ```
 
-# OPTIMIZE FSTAB FOR SSD
+# Optimize FSTAB for SSD
 ```
 $nano /mnt/etc/fstab
 ```
@@ -72,7 +72,7 @@ $nano /mnt/etc/fstab
   /dev/sda5 /boot ext4 defaults,relatime,stripe=4              0 2
   /swapfile none  swap defaults                                0 0
 
-# CONFIGURE SYSTEM
+# Configure System
 ```
 $arch-chroot /mnt /bin/bash
 ```
@@ -101,7 +101,7 @@ $useradd -m -g users -G wheel -s /bin/bash myusername
 $passwd myusername
 ```
 
-# INSTALL AND GRANT SUDO
+# Install and grant sudo
 ```
 $pacman -S sudo
 ```
@@ -110,7 +110,7 @@ $pacman -S sudo
 $echo "%wheel ALL=(ALL) ALL" > /etc/sudoers.d/10-grant-wheel-group
 ```
 
-# LOCALE
+# Locale
 ```
 $nano /etc/locale.gen
 ```
@@ -141,7 +141,7 @@ $/etc/vconsole.conf
 
 KEYMAP=de-latin1
 
-# MKINITCPIO HOOKS
+# MKINITCPIO hooks
 Insert “keyboard” after “autodetect” if it’s not already there.
 ```
 $nano /etc/mkinitcpio.conf
@@ -152,7 +152,7 @@ Then run it:
 $mkinitcpio -p linux
 ```
 
-# INSTALL GRUB (to use Apples EFI bootloader)
+# Install Grub (to use Apples EFI bootloader)
 ```
 $pacman -S grub-efi-x86_64
 ```
@@ -183,7 +183,7 @@ $grub-mkstandalone -o boot.efi -d usr/lib/grub/x86_64-efi -O x86_64-efi --compre
 ```
 Copy boot.efi (generated in the command above) to a USB stick for use later in OS X.
 
-# EXIT
+# Exit
 ```
 $exit # exit chroot
 ```
@@ -192,7 +192,7 @@ $exit # exit chroot
 $reboot
 ```
 
-# IN OSX (BOOT FROM INSTALL MEDIA -> TERMINAL)
+# Back in OSX/MacOS (Boot from install media -> Terminal)
 ```
 $cd /Volumes/disk0s4
 ```
@@ -255,14 +255,14 @@ Copy boot.efi from your USB stick to this CoreServices directory. The tree shoul
                         |___SystemVersion.plist
                         |___boot.efi
 
-# BLESS BOOT DEVICE
+# Bless boot device
 
 ```
 $sudo bless --device /dev/disk0s4 --setBoot
 
 ```
 
-# DISABLE SYSTEM INTEGRITY PROTECTION
+# Disable System Integrity Protection
 ```
 $csrutil disable
 ```
@@ -299,7 +299,7 @@ $enable wpa_supplicant
 ```
 (check for conflicting network services ie dhcpcd)
 
-# AUDIO
+# Audio
 ```
 $sudo pacman -S alsa-utils
 ```
@@ -308,7 +308,7 @@ $sudo pacman -S alsa-utils
 $sudo pacman -S pulseaudio
 ```
 
-# KEYBOARD HOTKEYS
+# Keyboard Hotkeys
 ```
 $yaourt -S pommed-light
 ```
@@ -318,7 +318,7 @@ $systemctl enable pommed.service
 ```
 
 
-# XORG-SERVER
+# XORG-Server
 ```
 $sudo pacman -S xf86-video-intel
 ```
@@ -332,7 +332,7 @@ $sudo pacman -S xf86-video-vesa
 
 ~.xinitrc [config files in this repo]
 
-# i3 WM
+# i3 Window Manager
 
 ```
 ~.config/i3/ [confog files attached]
