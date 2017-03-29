@@ -1,4 +1,5 @@
-#Description
+# Description
+
 This step-by-step guide describes the install of Arch Linux on a late 2013 Macbook Air 6,2 and how to get audio, video and media hotkeys running. It it relaitvely straightforward and the machine is running very well with Arch. The only thing that doesn't work is the camera. Please find various useful config files for i3wm, Xorg and termite in this repo.
 
 Credit mostly goes to the sources below. I just compiled and sorted out what is needed today.
@@ -7,11 +8,13 @@ Credit mostly goes to the sources below. I just compiled and sorted out what is 
 + http://panks.me/posts/2013/06/arch-linux-installation-with-os-x-on-macbook-air-dual-boot/
 + https://wiki.archlinux.org/index.php/Mac
 
-#Hardware
+# Hardware
+
 late 2013 Macbook Air 6,2
 
 
-#PARTITIONS
+# PARTITIONS
+
 ```
 $cgdisk /dev/sda
 ```
@@ -36,7 +39,7 @@ $mount /dev/sda6 /mnt
 $mkdir /mnt/boot && mount /dev/sda5 /mnt/boot
 ```
 
-#SWAPFILE
+# SWAPFILE
 
 ```
 $dd if=/dev/zero of=/mnt/swapfile bs=1M count=512
@@ -51,7 +54,7 @@ $chmod 600 /mnt/swapfile
 $mkswap /mnt/swapfile
 ```
 
-#INSTALL
+# INSTALL
 ```
 $pacstrap /mnt base base-devel
 ```
@@ -60,7 +63,7 @@ $pacstrap /mnt base base-devel
 $genfstab -U -p /mnt >> /mnt/etc/fstab
 ```
 
-#OPTIMIZE FSTAB FOR SSD
+# OPTIMIZE FSTAB FOR SSD
 ```
 $nano /mnt/etc/fstab
 ```
@@ -69,7 +72,7 @@ $nano /mnt/etc/fstab
   /dev/sda5 /boot ext4 defaults,relatime,stripe=4              0 2
   /swapfile none  swap defaults                                0 0
 
-#CONFIGURE SYSTEM
+# CONFIGURE SYSTEM
 ```
 $arch-chroot /mnt /bin/bash
 ```
@@ -98,7 +101,7 @@ $useradd -m -g users -G wheel -s /bin/bash myusername
 $passwd myusername
 ```
 
-#INSTALL AND GRANT SUDO
+# INSTALL AND GRANT SUDO
 ```
 $pacman -S sudo
 ```
@@ -107,7 +110,7 @@ $pacman -S sudo
 $echo "%wheel ALL=(ALL) ALL" > /etc/sudoers.d/10-grant-wheel-group
 ```
 
-#LOCALE
+# LOCALE
 ```
 $nano /etc/locale.gen
 ```
@@ -138,7 +141,7 @@ $/etc/vconsole.conf
 
 KEYMAP=de-latin1
 
-#MKINITCPIO HOOKS
+# MKINITCPIO HOOKS
 Insert “keyboard” after “autodetect” if it’s not already there.
 ```
 $nano /etc/mkinitcpio.conf
@@ -149,7 +152,7 @@ Then run it:
 $mkinitcpio -p linux
 ```
 
-#INSTALL GRUB (to use Apples EFI bootloader)
+# INSTALL GRUB (to use Apples EFI bootloader)
 ```
 $pacman -S grub-efi-x86_64
 ```
@@ -180,7 +183,7 @@ $grub-mkstandalone -o boot.efi -d usr/lib/grub/x86_64-efi -O x86_64-efi --compre
 ```
 Copy boot.efi (generated in the command above) to a USB stick for use later in OS X.
 
-#EXIT
+# EXIT
 ```
 $exit # exit chroot
 ```
@@ -189,7 +192,7 @@ $exit # exit chroot
 $reboot
 ```
 
-#IN OSX (BOOT FROM INSTALL MEDIA -> TERMINAL)
+# IN OSX (BOOT FROM INSTALL MEDIA -> TERMINAL)
 ```
 $cd /Volumes/disk0s4
 ```
@@ -252,24 +255,24 @@ Copy boot.efi from your USB stick to this CoreServices directory. The tree shoul
                         |___SystemVersion.plist
                         |___boot.efi
 
-#BLESS THE VOLUME
+# BLESS BOOT DEVICE
 
 ```
 $sudo bless --device /dev/disk0s4 --setBoot
 
 ```
 
-#DISABLE SYSTEM INTEGRITY PROTECTION
+# DISABLE SYSTEM INTEGRITY PROTECTION
 ```
 $csrutil disable
 ```
 
-#LAN
+# LAN
 Thunderbolt to Gigabit works out of the box for live iso
 DHCP: "dhcpcd ens9"
 automate via: ifplugd (settings /etc/ifplugd/ifplugd.conf)
 
-#WIFI
+# WIFI
 ```
 $modprobe wl
 ```
@@ -296,7 +299,7 @@ $enable wpa_supplicant
 ```
 (check for conflicting network services ie dhcpcd)
 
-#AUDIO
+# AUDIO
 ```
 $sudo pacman -S alsa-utils
 ```
@@ -305,7 +308,7 @@ $sudo pacman -S alsa-utils
 $sudo pacman -S pulseaudio
 ```
 
-#KEYBOARD HOTKEYS
+# KEYBOARD HOTKEYS
 ```
 $yaourt -S pommed-light
 ```
@@ -315,7 +318,7 @@ $systemctl enable pommed.service
 ```
 
 
-#XORG-SERVER
+# XORG-SERVER
 ```
 $sudo pacman -S xf86-video-intel
 ```
@@ -329,7 +332,7 @@ $sudo pacman -S xf86-video-vesa
 
 ~.xinitrc [config files in this repo]
 
-#i3 WM
+# i3 WM
 
 ```
 ~.config/i3/ [confog files attached]
