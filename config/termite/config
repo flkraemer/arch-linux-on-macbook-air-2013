@@ -1,0 +1,9 @@
+[options]
+font = DejaVuSansMono 9
+clickable_url = true
+
+[colors]
+background = rgba(20,20,20,0.8)
+foreground = #72cee5
+foreground_bold = #7295e5	
+cursor = #f2f2f2
