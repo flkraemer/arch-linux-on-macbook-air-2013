@@ -19,9 +19,10 @@ late 2013 Macbook Air 6,2
 $cgdisk /dev/sda
 ```
 
-    EFI	/dev/sda1        200MB				      HFS+ (or apparently FAT works too, this Partition can be made via a gparted live ISO) 
-    Boot	/dev/sda2      256MB				      Linux Filesystem
-    Root	/dev/sda3      <remainign size> 	Linux Filesystem
+    EFI	/dev/sda1        200MB              HFS+ 
+    (or apparently FAT works too, this partition can be made via a gparted live ISO btw) 
+    Boot	/dev/sda2    256MB	            Linux Filesystem
+    Root	/dev/sda3    <remainign size> 	Linux Filesystem
 
 ```
 $mkfs.ext4 /dev/sda5
